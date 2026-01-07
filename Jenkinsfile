@@ -1,12 +1,7 @@
 pipeline {
     agent any
 
-    stages {
-        stage('Clone repository') {
-            steps {
-                git 'https://github.com/harshkashyap01/devops-ci-cd-project.git'
-            }
-        }
+   
 
         stage('Build Docker Image') {
             steps {
