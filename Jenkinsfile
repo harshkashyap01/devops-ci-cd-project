@@ -2,18 +2,32 @@ pipeline {
     agent any
 
     stages {
+
+        stage('Clone Repository') {
+            steps {
+                git 'https://github.com/harshkashyap01/devops-ci-cd-project.git'
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t flask-cicd-app .'
+                sh 'docker build -t devops-app .'
+            }
+        }
+
+        stage('Stop Old Container') {
+            steps {
+                sh 'docker stop devops-app || true'
+                sh 'docker rm devops-app || true'
             }
         }
 
         stage('Run Container') {
             steps {
-                sh 'docker rm -f flask-cicd-container || true'
-                sh 'docker run -d -p 5000:5000 --name flask-cicd-container flask-cicd-app'
+                sh 'docker run -d -p 80:80 --name devops-app devops-app'
             }
         }
+
     }
 }
 
